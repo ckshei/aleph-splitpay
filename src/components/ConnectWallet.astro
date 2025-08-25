@@ -1,7 +1,7 @@
 <div id="connect-wrap" class="wrap" aria-live="polite">
   &nbsp;
   <div class="ellipsis"></div>
-  <button style="display:none" data-connect aria-controls="connect-wrap">
+  <button style="" data-connect aria-controls="connect-wrap">
     Connect
   </button>
   <button style="display:none" data-disconnect aria-controls="connect-wrap">
@@ -29,6 +29,7 @@
 </style>
 
 <script>
+  import { walletStore } from '../useWalletStore';
   import { getPublicKey, connect, disconnect } from "../stellar-wallets-kit";
 
   const ellipsis = document.querySelector(
@@ -49,6 +50,7 @@
   async function showConnected() {
     const publicKey = await getPublicKey();
     if (publicKey) {
+      walletStore().connect(publicKey);
       ellipsis.innerHTML = `Signed in as ${publicKey}`;
       ellipsis.title = publicKey ?? "";
       connectButton.style.display = "none";
